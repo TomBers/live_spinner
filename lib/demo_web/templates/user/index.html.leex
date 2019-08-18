@@ -1,0 +1,54 @@
+<h2>Listing Users, page <%= @page %></h2>
+
+<table phx-keydown="keydown" phx-target="window">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Phone #</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+    <tr>
+      <td><%= user.username %></td>
+      <td><%= user.email %></td>
+      <td><%= user.phone_number %></td>
+
+      <td>
+        <%= link "Show", to: Routes.live_path(@socket, UserLive.Show, user) %>
+        <%= link "Edit", to: Routes.live_path(@socket, UserLive.Edit, user) %>
+        <%= link "Delete", to: "#",
+            phx_click: "delete_user",
+            phx_value: user.id %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span>(live)</span>
+<%= if @page > 1 do %>
+  <span><%= live_link "prev", to: Routes.live_path(@socket, UserLive.Index, @page - 1) %></span>
+<% end %>
+<%= for i <- (@page - 5)..(@page + 5), i > 0 do %>
+  <span><%= live_link i, to: Routes.live_path(@socket, UserLive.Index, i) %></span>
+<% end %>
+<span><%= live_link "next", to: Routes.live_path(@socket, UserLive.Index, @page + 1), replace: @page > 10 %></span>
+
+<br/>
+<span>(regular)</span>
+<%= if @page > 1 do %>
+  <span><%= link "prev", to: Routes.live_path(@socket, UserLive.Index, @page - 1) %></span>
+<% end %>
+<%= for i <- (@page - 5)..(@page + 5), i > 0 do %>
+  <span><%= link i, to: Routes.live_path(@socket, UserLive.Index, i) %></span>
+<% end %>
+<span><%= link "next", to: Routes.live_path(@socket, UserLive.Index, @page + 1) %></span>
+<br/>
+<br/>
+<span><%= live_link "New User (live)", to: Routes.live_path(@socket, UserLive.New) %></span>
+<br/>
+<span><%= link "New User (regular)", to: Routes.live_path(@socket, UserLive.New) %></span>
