@@ -106,8 +106,9 @@ defmodule DemoWeb.Spinner do
       else
         n
       end
-    alpha = n/1000
-    "rgba(124,240,10,#{alpha})"
+    alpha = n/500
+    "rgba(117,87,172, #{alpha})"
+#    "rgba(124,240,10,#{alpha})"
 #    Enum.random(["#E3E84E", "#0F3450", "#200B48", "#C06EA6", "#E2310E"])
   end
 
